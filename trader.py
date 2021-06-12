@@ -6,10 +6,10 @@ class Trader:
         self.balance = capital
         self.crypto_wallet = 0
         self.interval = interval
-        self.buy_amount = 100 #How many dollars to buy when appropriate
-        self.sell_amount = 100
-        self.buy_threshold = 0
-        self.sell_threshold = 0
+        self.buy_amount = 200 #How many dollars to buy when appropriate
+        self.sell_amount = 200
+        self.buy_threshold = 50
+        self.sell_threshold = 50
         self.crypto = Crypto(crypto)
         self.history = []
 
@@ -17,7 +17,7 @@ class Trader:
         while(True):
             res = self.crypto.fetch()
             self.history.append({'ask':res['ask'], 'bid': res['bid']})
-            print('====================')
+            print('==================')
             print('ask:', "${:.2f}".format(res['ask']))
             print('bid:', "${:.2f}".format(res['bid']))
             print('\n')
@@ -27,10 +27,10 @@ class Trader:
             print('\n')
             print('balance:', "${:.2f}".format(self.balance))
             print('crypto wallet:', self.crypto_wallet)
-            print('portfolio value:', "${:.2f}".format(self.balance + (self.crypto_wallet * ask_avg)))
-            print('====================')
+            print('value:', "${:.2f}".format(self.balance + (self.crypto_wallet * ask_avg)))
+            print('==================')
 
-            if len(self.history) > 5:
+            if len(self.history) > 15:
                 if res['ask'] > (ask_avg + self.buy_threshold) and self.balance > self.buy_amount:
                     self.balance -= self.buy_amount
                     bought = self.crypto.buy(self.buy_amount)
